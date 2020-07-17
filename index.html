@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="stylesheet" href="layui/css/layui.css">
+<style>
+    body {
+        background-color: #AAAAAA;
+    }
+</style>
+<body>
+<div class="layui-container">
+    <div class="row" style="margin-top: 50px;">
+        <div class="layui-card layui-col-lg10 layui-col-lg-offset1">
+            <blockquote class="layui-elem-quote">AES-128加密/解密</blockquote>
+            <div class="layui-card-body">
+                <form class="layui-form layui-form-pane" action="">
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">加密模式</label>
+                        <div class="layui-input-block">
+                            <select name="cryptMode" lay-filter="aihao">
+                                <option value="0" selected>CBC</option>
+                                <option value="1">ECB</option>
+                                <option value="2">CTR</option>
+                                <option value="3">CFB</option>
+                                <option value="4">OFB</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">填充模式</label>
+                        <div class="layui-input-block">
+                            <select name="paddingMode" lay-filter="aihao">
+                                <option value="0" selected>Pkcs7</option>
+                                <option value="1">ZeroPadding</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密钥</label>
+                        <div class="layui-input-inline" style="width: 85%">
+                            <input type="text"
+                                   name="key"
+                                   autocomplete="off"
+                                   class="layui-input"
+                                   id="keyInput"
+                                   lay-verify="required"
+                                   placeholder="16位且不支持中文"
+                                   onblur="checkChinese(this)"
+                                   maxlength="16">
+                        </div>
+                        <i class="layui-icon layui-icon-refresh" onclick="refreshKey()" title="随机生成key"></i>
+
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">初始向量</label>
+                        <div class="layui-input-inline" style="width: 85%">
+                            <input type="text"
+                                   name="iv"
+                                   autocomplete="off"
+                                   class="layui-input"
+                                   placeholder="16位且不支持中文"
+                                   lay-verify="required"
+                                   id="ivInput"
+                                   onblur="checkChinese(this)"
+                                   maxlength="16">
+                        </div>
+                        <i class="layui-icon layui-icon-refresh" onclick="refreshIV()" title="随机生成iv"></i>
+
+                    </div>
+
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">加密内容</label>
+                        <div class="layui-input-block">
+                            <textarea placeholder="请输入内容" name="encryptStr" id="encryptTextArea"
+                                      class="layui-textarea"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <button class="layui-btn layui-btn-primary layui-btn-sm layui-col-md1 layui-col-md-offset5"
+                                lay-submit lay-filter="encrypt">
+                            <i class="layui-icon layui-icon-down"></i>加密
+                        </button>
+                        <button class="layui-btn layui-btn-primary layui-btn-sm layui-col-md1 layui-col-md-offset5"
+                                lay-submit lay-filter="decrypt">
+                            <i class="layui-icon layui-icon-up"></i>解密
+                        </button>
+                    </div>
+
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">Base64密文内容</label>
+                        <div class="layui-input-block">
+                            <textarea placeholder="请输入内容" name="encryptedStr" class="layui-textarea"
+                                      id="encryptedTextArea"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+<script src="js/crypto-js.js"></script>
+<script src="js/Encrypt.js"></script>
+<script src="layui/layui.all.js"></script>
+<script src="js/index.js"></script>
+</html>
